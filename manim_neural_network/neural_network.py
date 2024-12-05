@@ -87,3 +87,29 @@ class NeuralNetworkMobject(VGroup):
             text.set_height(0.3)
             text.next_to(neuron, RIGHT)
             self.add(text)
+
+
+# Need to add this
+
+    def label_layers(self, labels, input_size=0.4, hidden_size=0.25, output_size=0.4):
+        """
+        Adds labels above each layer to describe its role, with specific sizes for input, hidden, and output layers.
+        Default values are used if no specific size is provided.
+        """
+        label_objects = VGroup()  # Group all labels to manage them together
+        for i, (label_text, layer) in enumerate(zip(labels, self.layers)):
+            label = Text(label_text)
+            
+            # Set the size based on the layer type
+            if i == 0:  # Input layer
+                label.scale(input_size)
+            elif i == len(self.layers) - 1:  # Output layer
+                label.scale(output_size)
+            else:  # Hidden layers
+                label.scale(hidden_size)
+            
+            label.next_to(layer, UP)  # Place the label above the layer
+            label_objects.add(label)  # Add the label to the group
+
+        self.add(label_objects)  # Add the group of labels to the scene
+        return label_objects  # Return the labels for further animation if needed
